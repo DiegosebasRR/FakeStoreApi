@@ -1,10 +1,10 @@
 import * as AWS from 'aws-sdk';
 
 export class s3Service {
-  AWS_S3_BUCKET = 'test-diego-apps';
+  AWS_S3_BUCKET = process.env.AWS_S3_BUCKET;
   s3 = new AWS.S3({
-    accessKeyId: 'AKIASMVSBF3EVAOZNUTO',
-    secretAccessKey: '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',
+    accessKeyId: process.env.AWS_S3_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_,
   });
 
   async uploadFile(file) {
