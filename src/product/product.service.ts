@@ -31,13 +31,11 @@ export class ProductService {
     }
   }
 
-  async findAll(offset: number, limit: number): Promise<Product[]> {
+  async findAll(): Promise<Product[]> {
     try {
       const products = await this.productModel
         .find()
         .populate('Category')
-        .skip(offset)
-        .limit(limit)
         .exec();
       return products;
     } catch (error) {

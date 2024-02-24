@@ -23,15 +23,20 @@ export class ProductController {
   }
   @Get()
   async findAll(
-    @Query('offset') offset: number,
-    @Query('limit') limit: number,
+    @Query('results') results: number,
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
   ) {
-    const products = await this.productService.findAll(offset, limit);
-    const totalPages = await this.productService.getTotalPages(limit);
+    const products = await this.productService.findAll();
+    const totalPages = Math.ceil(results / pageSize);
 
-    const hasMorePages = offset < totalPages * limit - limit;
+    // Paginar los productos
+    const paginatedProducts = products.slice(
+      (page - 1) * pageSize,
+      page * pageSize,
+    );
 
-    return { products, hasMorePages, totalPages };
+    return { products: paginatedProducts, totalPages };
   }
 
   @Get(':id')
